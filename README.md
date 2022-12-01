@@ -51,5 +51,5 @@ options:
   
   Test cases for program1 and show diff
   ```
-  python3 tester2.py -p program1 -d
+  python3 tester.py -p program1 -d
   ```

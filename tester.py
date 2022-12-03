@@ -24,7 +24,7 @@ class CengTester:
 
     def run(self):
         args = self.get_args()
-        self.show_diff = args.show_diff
+        self.is_show_diff = args.show_diff
         self.init_compiler(args.compiler_command)
         self.check_code_exists()
         self.init_program(args.program)
@@ -73,6 +73,11 @@ class CengTester:
             sys.exit()
 
         self.test_cases_names = list(test_cases_names)
+        try:
+            self.test_cases_names = [int(x) for x in self.test_cases_names]
+        except: pass
+        self.test_cases_names = sorted(self.test_cases_names)
+
         self.total = len(self.test_cases_names)
         if self.total == 0:
             print("No test cases found")
@@ -96,6 +101,7 @@ class CengTester:
         if os.name == "nt":
             Path(f"{c}.exe").unlink(missing_ok=True)
         else:
+            print("unlinking")
             Path(c).unlink(missing_ok=True)
         if r.stderr:
             raise RunException(str(r.stderr))
@@ -108,6 +114,25 @@ class CengTester:
         else:
             return False
 
+    def show_diff(self, yourf, expectedf):
+        custom_diff(yourf, expectedf)
+        print()
+        print("[Q] to terminate")
+        print("[V] to view whole file")
+        print("[Enter] to continue")
+        r = input("").upper()
+        if r == "Q":
+            print("Terminating...")
+            return -1
+        elif r == "V":
+            custom_diff(yourf, expectedf)
+            print()
+            print("[Q] to terminate")
+            print("[Enter] to continue")
+            r = input("").upper()
+            if r == "Q":
+                print("Terminating...")
+                return -1
 
     def test_program(self):
         for c in self.test_cases_names:
@@ -125,24 +150,10 @@ class CengTester:
                 self.failed += 1
                 yourf.write_text(your_output)
                 print(f"Test Case: {c} FAILED")
-                custom_diff(yourf, expectedf)
-                print()
-                print("[Q] to terminate")
-                print("[V] to view whole file")
-                print("[Enter] to continue")
-                r = input("").upper()
-                if r == "Q":
-                    print("Terminating...")
-                    break
-                elif r == "V":
-                    custom_diff(yourf, expectedf)
-                    print()
-                    print("[Q] to terminate")
-                    print("[Enter] to continue")
-                    r = input("").upper()
-                    if r == "Q":
-                        print("Terminating...")
+                if(self.is_show_diff):
+                    if(self.show_diff(yourf, expectedf) == -1):
                         break
+
             else:
                 self.passed += 1
                 print(f"Test Case: {c} PASSED")

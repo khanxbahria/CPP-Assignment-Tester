@@ -138,6 +138,10 @@ class CengTester:
                 print("Terminating...")
                 return -1
 
+    def write_text(self, fpath, data):
+        with fpath.open(mode="w", newline="\n") as f:
+            f.write(data)
+
     def test_program(self):
         for c in self.test_cases_names:
             yourf = self.your_output_dir / f"{c}.txt"
@@ -154,7 +158,7 @@ class CengTester:
 
             if your_output != expected_output:
                 self.failed += 1
-                yourf.write_text(your_output, newline='\n')
+                self.write_text(yourf, your_output)
                 print(f"Test Case: {c} FAILED")
                 if(self.is_show_diff):
                     if(self.show_diff(yourf, expectedf) == -1):

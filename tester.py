@@ -4,6 +4,7 @@ from pathlib import Path
 import subprocess
 import os
 from icdiff_helper import custom_diff
+
 class CompileException(Exception):
     pass
 
@@ -74,9 +75,11 @@ class CengTester:
 
         self.test_cases_names = list(test_cases_names)
         try:
-            self.test_cases_names = [int(x) for x in self.test_cases_names]
-        except: pass
-        self.test_cases_names = sorted(self.test_cases_names)
+            self.test_cases_names = sorted([int(x) for x in self.test_cases_names])
+            self.test_cases_names = [str(x) for x in self.test_cases_names]
+        except:
+            self.test_cases_names = sorted(self.test_cases_names)
+
 
         self.total = len(self.test_cases_names)
         if self.total == 0:
@@ -95,14 +98,15 @@ class CengTester:
         if r.stderr:
             raise CompileException(str(r.stderr))
 
-    def run_test_case(self, c):
-        command = f"./{c}"
-        r = self.run_command(command)
+    def delete_exec(self, c):
         if os.name == "nt":
             Path(f"{c}.exe").unlink(missing_ok=True)
         else:
-            print("unlinking")
             Path(c).unlink(missing_ok=True)
+
+    def run_test_case(self, c):
+        command = f"./{c}"
+        r = self.run_command(command)
         if r.stderr:
             raise RunException(str(r.stderr))
         return r.stdout
@@ -145,6 +149,8 @@ class CengTester:
                 your_output = str(self.run_test_case(c))
             except Exception as e:
                 your_output = str(e)
+            self.delete_exec(c)
+
 
             if your_output != expected_output:
                 self.failed += 1

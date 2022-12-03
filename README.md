@@ -9,6 +9,14 @@ TBD
 # How to Use
 ## Try online
  - TBD. Github codespaces instructions
+ - Sign in to Github.
+ - Open the repository in Github Codespaces.  
+  [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=REPO_ID)
+ - Upload your code files to ```your_code``` folder.
+ - ```Ctrl```+``` ` ``` to toggle terminal.
+ - ```  python3 tester.py -p program1 -d```
+ 
+ 
 
 ## Local
 ### Install

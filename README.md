@@ -1,5 +1,5 @@
 # Generic CPP Assignment Tester - Template
- A script that will compile and run C++ test cases against your code to test against the given set of expected outputs
+ A script that will compile and run C++ test cases against your code to test against the given set of expected outputs.
 #### Note: 
 To be used as a template.
 
@@ -8,7 +8,6 @@ TBD
 
 # How to Use
 ## Try online
- - TBD. Github codespaces instructions
  - Sign in to Github.
  - Open the repository in Github Codespaces.  
   [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=REPO_ID)

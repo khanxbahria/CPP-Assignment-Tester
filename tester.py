@@ -154,7 +154,7 @@ class CengTester:
 
             if your_output != expected_output:
                 self.failed += 1
-                yourf.write_text(your_output)
+                yourf.write_text(your_output, newline='\n')
                 print(f"Test Case: {c} FAILED")
                 if(self.is_show_diff):
                     if(self.show_diff(yourf, expectedf) == -1):

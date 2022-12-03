@@ -1,4 +1,9 @@
 from icdiff import *
+import os
+#Stupid Windows stuff
+
+if os.name == "nt":
+    os.system("")  # enables ansi escape characters in terminal
 
 def custom_diff(yourf, expectedf, view_whole=False):
     custom_args = (f"{yourf} {expectedf} -N -L Your-Output -L"

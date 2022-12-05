@@ -191,7 +191,7 @@ class CengTester:
                                       )
         parser.add_argument('-p', '--program', required=True, 
                             help = 'The program to be tested')
-        parser.add_argument('-cc', '--compiler-command', default='g++')
+        parser.add_argument('-cc', '--compiler-command', default='g++ -w')
         parser.add_argument('-d', '--show-diff', action='store_true', default=True,
                             help = 'Display diff between Given Output and Expected Output.'
                                    )
